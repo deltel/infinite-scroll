@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <title>Infinite Scroll</title>
+        <style>
+            div#container {
+                width: 100%;
+            }
+            div.bar {
+                background-color: #333;
+                height: 50px;
+                margin-top: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container"></div>
+
+        <script>
+            const container = document.getElementById("container");
+            const maxContent = 50;
+            let currentCount = 0;
+            const addMoreContent = () => {
+                if(currentCount === maxContent) {
+                    return;
+                }
+                const numberOfBars = 10;
+                for(let i = 0; i < numberOfBars; i++) {
+                    const barDiv = document.createElement("div");
+                    barDiv.className = "bar";
+                    container.appendChild(barDiv);
+                }
+                currentCount = currentCount + numberOfBars;
+            }
+            window.onload = () => {
+                addMoreContent();
+
+                document.addEventListener("scroll", () => {
+                    const endOfPage = window.innerHeight + window.pageYOffset >= document.body.offsetHeight;
+                    if(endOfPage) {
+                        addMoreContent();
+                    }
+                })
+            };
+        </script>
+    </body>
+</html>
